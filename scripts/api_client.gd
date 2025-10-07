@@ -21,14 +21,14 @@ func send_message(message: String, conversation_history: Array=[]) -> void:
 	
 	http_request.request_completed.connect(_on_request_completed.bind(http_request))
 	
-	var headers = ["Content-Typer: application/json", "Authorization: Bearer" + API_KEY]
+	var headers = ["Content-Type: application/json", "Authorization: Bearer " + API_KEY]
 	
 	# messages array to keep history as context
 	var messages = []
 	
 	# set system prompt
 	var system_prompt = _system_prompt()
-	messages.append({"system:": system_prompt})
+	messages.append({"role": "system:", "content": system_prompt})
 	
 	for msg in conversation_history:
 		messages.append(msg)
@@ -44,7 +44,7 @@ func send_message(message: String, conversation_history: Array=[]) -> void:
    
 	var error = http_request.request(base_url, headers, HTTPClient.METHOD_POST, body)
 	if error != OK:
-		emit_signal("error_occurred", "Error creating request: " + str(error))
+		emit_signal("error", "Error creating request: " + str(error))
 		http_request.queue_free()
 	
 

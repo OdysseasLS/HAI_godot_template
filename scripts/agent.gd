@@ -16,9 +16,20 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+	
+func reply(message: String):
+	if message.strip_edges()=="":
+		return
+	
+	var user_message = {"role": "user", "content": message}
+	conversation_history.append(user_message)
+	emit_signal("conversation_updated", conversation_history)
+	
+	ApiClient.send_message(message, conversation_history)
+	
 
 func _on_response(response_text: String):
-	var message = {"role": "AI", "content": response_text}
+	var message = {"role": "assistant", "content": response_text}
 	conversation_history.append(message)
 	
 	emit_signal("response_received", response_text)
