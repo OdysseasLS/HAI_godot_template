@@ -14,6 +14,9 @@ var base_url = "https://api.openai.com/v1/chat/completions"
 signal response_received(response_text)
 signal error(error_message)
 
+func _ready():
+	Dotenv.load_('../.env')
+
 func send_message(message: String, conversation_history: Array=[]) -> void:
 	
 	var http_request = HTTPRequest.new()

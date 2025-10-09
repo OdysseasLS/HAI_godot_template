@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://pi6mkvsjbu2a"]
 
-[ext_resource type="Script" uid="uid://cab0cih7i8b2o" path="res://test.gd" id="1_8uh7m"]
-[ext_resource type="PackedScene" uid="uid://c2suh5bep8hj3" path="res://scenes/agent.tscn" id="2_6uqi0"]
+[ext_resource type="Script" uid="uid://cab0cih7i8b2o" path="res://scripts/test.gd" id="1_bl13t"]
+[ext_resource type="PackedScene" uid="uid://c2suh5bep8hj3" path="res://scenes/agent.tscn" id="2_iyx0m"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -10,9 +10,9 @@ offset_left = 2.0
 offset_top = 2.0
 offset_right = 1154.0
 offset_bottom = 645.0
-script = ExtResource("1_8uh7m")
+script = ExtResource("1_bl13t")
 
-[node name="Agent" parent="." instance=ExtResource("2_6uqi0")]
+[node name="Agent" parent="." instance=ExtResource("2_iyx0m")]
 
 [node name="Button" type="Button" parent="."]
 visible = false
@@ -35,11 +35,13 @@ offset_top = 12.0
 offset_right = 1151.0
 offset_bottom = 655.0
 
-[node name="InputField" type="LineEdit" parent="VBoxContainer"]
+[node name="ChatDisplay" type="RichTextLabel" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="ChatDisplay" type="RichTextLabel" parent="VBoxContainer"]
+[node name="InputField" type="LineEdit" parent="VBoxContainer"]
 layout_mode = 2
 
 [node name="SendButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+
+[connection signal="pressed" from="VBoxContainer/SendButton" to="." method="_on_send_button_pressed"]

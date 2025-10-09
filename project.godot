@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 ApiClient="*res://scripts/api_client.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/dotenv/plugin.cfg")
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

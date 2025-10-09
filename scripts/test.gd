@@ -7,7 +7,7 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	send_button.pressed.connect(_on_send_pressed)
+	send_button.pressed.connect(_on_send_button_pressed)
 	agent.response_received.connect(_on_agent_response)
 	agent.error.connect(_on_agent_error)
 
@@ -15,14 +15,16 @@ func _ready():
 func _process(delta):
 	pass
 	
-func _on_send_pressed():
+func _on_send_button_pressed():
 	var message = input_field.text
-	agent.reply(message)
+	#agent.reply(message)
 	input_field.text=""
 	chat_display.text += "\nYou: " + message
+	print(chat_display.text)
 	
 	
 func _on_agent_response(response_text):
+	print("on agent response called")
 	chat_display.text += "\nAI: " + response_text
 
 func _on_agent_error(error_message):
