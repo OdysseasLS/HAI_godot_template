@@ -10,6 +10,7 @@ func _ready():
 	send_button.pressed.connect(_on_send_button_pressed)
 	agent.response_received.connect(_on_agent_response)
 	agent.error.connect(_on_agent_error)
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -17,7 +18,7 @@ func _process(delta):
 	
 func _on_send_button_pressed():
 	var message = input_field.text
-	#agent.reply(message)
+	agent.reply(message)
 	input_field.text=""
 	chat_display.text += "\nYou: " + message
 	print(chat_display.text)

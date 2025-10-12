@@ -15,7 +15,10 @@ signal response_received(response_text)
 signal error(error_message)
 
 func _ready():
-	Dotenv.load_('../.env')
+	# load API key from env
+	Dotenv.load_("res://scripts/.env")
+	API_KEY = OS.get_environment("API_KEY")
+	print(API_KEY)
 
 func send_message(message: String, conversation_history: Array=[]) -> void:
 	
@@ -31,7 +34,7 @@ func send_message(message: String, conversation_history: Array=[]) -> void:
 	
 	# set system prompt
 	var system_prompt = _system_prompt()
-	messages.append({"role": "system:", "content": system_prompt})
+	messages.append({"role": "system", "content": system_prompt})
 	
 	for msg in conversation_history:
 		messages.append(msg)
@@ -49,7 +52,7 @@ func send_message(message: String, conversation_history: Array=[]) -> void:
 	if error != OK:
 		emit_signal("error", "Error creating request: " + str(error))
 		http_request.queue_free()
-	
+	print("API client send message has been accessed")
 
 
 func _system_prompt():
@@ -65,6 +68,8 @@ func _system_prompt():
 	return system_prompt
 	
 func _on_request_completed(result, response_code, headers, body):
+	print("response code: "+response_code)
+	
 	if response_code == 200:
 		var json = JSON.new()
 		var parse_result = json.parse(body.get_string_from_utf8())
@@ -72,7 +77,7 @@ func _on_request_completed(result, response_code, headers, body):
 		if parse_result == OK:
 			var response_data = json.get_data()
 			var response_text = response_data["choices"][0]["message"]["content"]
-			emit_signal("response_recieved", response_text.strip())
+			emit_signal("response_received", response_text.strip())
 		else:
 			emit_signal("error", "can't parse")
 	else:

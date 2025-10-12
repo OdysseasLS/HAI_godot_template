@@ -8,6 +8,7 @@ var conversation_history = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	if ApiClient:
 		ApiClient.response_received.connect(_on_response)
 		ApiClient.error.connect(_on_error)
@@ -20,12 +21,13 @@ func _process(delta):
 func reply(message: String):
 	if message.strip_edges()=="":
 		return
-	
+	print("i'm here for message "+message)
 	var user_message = {"role": "user", "content": message}
 	conversation_history.append(user_message)
 	emit_signal("conversation_updated", conversation_history)
 	
 	ApiClient.send_message(message, conversation_history)
+	print(conversation_history)
 	
 
 func _on_response(response_text: String):
@@ -34,6 +36,7 @@ func _on_response(response_text: String):
 	
 	emit_signal("response_received", response_text)
 	emit_signal("conversation_updated", conversation_history)
+	print(conversation_history)
 	
 func _on_error(error_message:String):
 	emit_signal("error", error_message)
