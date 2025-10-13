@@ -32,6 +32,7 @@ func reply(message: String):
 
 func _on_response(response_text: String):
 	var message = {"role": "assistant", "content": response_text}
+	print(response_text)
 	conversation_history.append(message)
 	
 	emit_signal("response_received", response_text)
