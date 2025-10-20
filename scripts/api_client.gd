@@ -57,7 +57,7 @@ func send_message(message: String, conversation_history: Array=[]) -> void:
 
 func _system_prompt():
 	"""
-	set the system prompt as the "backgrount" prompt you want for your agent
+	set the system prompt as the "background" prompt you want for your agent
 	"""
 	# example system prompt
 	var system_prompt = """
