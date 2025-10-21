@@ -42,7 +42,7 @@ func send_message(message: String, conversation_history: Array=[]) -> void:
 	messages.append({"role": "user", "content": message})
 	
 	var body = JSON.stringify({
-		"model": "gpt-3.5-turbo",
+	"model": "gpt-3.5-turbo",
 		"messages": messages,
 		"max_tokens": 150,
 		"temperature": 0.7
@@ -67,8 +67,8 @@ func _system_prompt():
 	
 	return system_prompt
 	
-func _on_request_completed(result, response_code, headers, body):
-	print("response code: "+response_code)
+func _on_request_completed(result, response_code, headers, body, http_request):
+	print("response code: "+str(response_code))
 	
 	if response_code == 200:
 		var json = JSON.new()
@@ -77,10 +77,12 @@ func _on_request_completed(result, response_code, headers, body):
 		if parse_result == OK:
 			var response_data = json.get_data()
 			var response_text = response_data["choices"][0]["message"]["content"]
-			emit_signal("response_received", response_text.strip())
+			emit_signal("response_received", response_text.strip_edges())
 		else:
 			emit_signal("error", "can't parse")
 	else:
 		emit_signal("error", "request failed")
+		
+	http_request.queue_free()
 		
 	

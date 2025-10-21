@@ -19,8 +19,8 @@ func _process(delta):
 	pass
 	
 func reply(message: String):
-	if message.strip_edges()=="":
-		return
+	#if message.strip_edges()=="":
+		#return
 	print("i'm here for message "+message)
 	var user_message = {"role": "user", "content": message}
 	conversation_history.append(user_message)
