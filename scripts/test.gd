@@ -1,13 +1,14 @@
 extends Control
 
 @onready var input_field = $VBoxContainer/InputField
-@onready var chat_display = $VBoxContainer/ChatDisplay
+#@onready var chat_display = $VBoxContainer/ChatDisplay
+@onready var chat_display = $ChatDisplay
 @onready var send_button = $VBoxContainer/SendButton
 @onready var agent = $Agent
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	send_button.pressed.connect(_on_send_button_pressed)
+	#send_button.pressed.connect(_on_send_button_pressed)
 	agent.response_received.connect(_on_agent_response)
 	agent.error.connect(_on_agent_error)
 	
@@ -19,8 +20,8 @@ func _process(delta):
 func _on_send_button_pressed():
 	var message = input_field.text
 	agent.reply(message)
+	chat_display.text +="\nYou: " + message
 	input_field.text=""
-	chat_display.text += "\nYou: " + message
 	print(chat_display.text)
 	
 	
