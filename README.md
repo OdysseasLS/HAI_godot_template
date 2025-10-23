@@ -3,7 +3,7 @@
 This repository is created as a template for the purpose to be used in an assignment for the course Human-Agent Interaction in Leiden University.
 
 ### Requirements
-- Godot 4.4
+- Godot 4.4 (more recent should also work)
 - The plugin Godot dotenv (https://godotengine.org/asset-library/asset/3336) by lsbt installed from the Godot Asset Library and activated in the project
 
 ### How to use
