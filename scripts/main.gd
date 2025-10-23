@@ -5,7 +5,6 @@ extends Control
 @onready var button = $Button
 @onready var agent = $Agent
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 
 	button.pressed.connect(_on_button_pressed)
@@ -13,20 +12,21 @@ func _ready():
 	agent.error.connect(_on_agent_error)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
 func _on_button_pressed():
+	"""Updates chat display and passes the message to the agent"""
 	var message = input.text
 	agent.reply(message)
 	display.text +="\nYou: " + message
 	input.text = ""
-	print(display.text)
 	
 func _on_agent_response(response_text):
-	display.text += "\nAI: " + response_text
+	"""Update chat display after agent response"""
+	display.text += "\n agent: " + response_text
 	
 func _on_agent_error(error_message):
+	"""Show error message in terminal and chat display"""
 	display.text += "\nError: "+error_message
 	print("error ", error_message)

@@ -1,5 +1,3 @@
-extends Node
-
 """ 
 This script handles prompting your conversational AI model.
 It is written with OpenAI API in mind but you should be able to modify it
@@ -7,6 +5,9 @@ to use any LLM through API.
 The functions are only the most basic parts of creating a conversational agent,
 you can add your own functions to add diferent actions in this and other scripts.
 """
+
+extends Node
+
 
 var API_KEY = ""  # your API key here
 var base_url = "https://api.openai.com/v1/chat/completions"
@@ -18,9 +19,9 @@ func _ready():
 	# load API key from env
 	Dotenv.load_("res://scripts/.env")
 	API_KEY = OS.get_environment("API_KEY")
-	print(API_KEY)
 
 func send_message(message: String, conversation_history: Array=[]) -> void:
+	"""Make http request using OpenAI API and update conversation history"""
 	
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
@@ -68,6 +69,8 @@ func _system_prompt():
 	return system_prompt
 	
 func _on_request_completed(result, response_code, headers, body, http_request):
+	"""handles the result of the request"""
+	
 	print("response code: "+str(response_code))
 	
 	if response_code == 200:
@@ -83,6 +86,6 @@ func _on_request_completed(result, response_code, headers, body, http_request):
 	else:
 		emit_signal("error", "request failed")
 		
-	http_request.queue_free()
+	http_request.queue_free()  # free the http request after it is completed
 		
 	
